@@ -1,4 +1,5 @@
 import json
+from pprint import pprint
 
 
 class Airport:
@@ -30,14 +31,19 @@ data = []
 
 with open('Airports.txt', "r", encoding="utf8") as airports:
     for line in airports:
-        attributes = line.replace('"', "").split(",")
+        attributes = line.strip().replace('"', "").split(",")
         airport = Airport(attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5],
                           attributes[6], attributes[7], attributes[8], attributes[9], attributes[10], attributes[11], attributes[12],
                           attributes[13])
 
         data.append(airport)
 
+json_file = open("airports.json", "w")
+json_file.write("[")
 for el in data:
-    if el.country == "Congo (Kinshasa)":
-        print(el)
+    json_file.write(json.dumps(el.__dict__))
+    json_file.write(",")
 
+
+json_file.write("]")
+json_file.close()
